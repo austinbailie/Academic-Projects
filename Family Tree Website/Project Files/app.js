@@ -67,8 +67,7 @@ app.get('/uploads/:name', function(req , res){
     }
   });
 });
-
-//******************** Your code goes here ******************** 
+ 
 
 app.listen(portNum);
 console.log('Running app at localhost: ' + portNum);
@@ -100,8 +99,6 @@ app.post('/createFile', function(req , res){
   
   const testFolder = './uploads/';
 
-  //console.log(req.body);
-
   var fname = testFolder + req.body.fileName;
 
   var fileStr = "0 HEAD\n";
@@ -126,7 +123,6 @@ app.post('/createFile', function(req , res){
     if(err) {
         return console.log(err);
     }
-  //console.log("The file was saved!");
   });
 
 });
@@ -145,10 +141,8 @@ let sharedLib = ffi.Library('./sharedLib', {
 
 app.post('/makeSummary', function(req , res){
   
-  //console.log('body: ' + req.body.filename);
   let fileSum = sharedLib.createFileSum("./uploads/" + req.body.filename);
   var str = JSON.stringify(fileSum).replace(/\\n|\\r/g, '');
-  //console.log("Testing: " + str);
 
   var final = JSON.parse(str);
 
@@ -158,10 +152,8 @@ app.post('/makeSummary', function(req , res){
 
 app.post('/makeView', function(req , res){
   
-  //console.log('body: ' + req.body.filename);
   let viewData = sharedLib.populateGEDview("./uploads/" + req.body.filename);
   var str = JSON.stringify(viewData).replace(/\\n|\\r/g, '');
-  //console.log("Testing: " + str);
 
   var final = JSON.parse(str);
 
@@ -173,10 +165,8 @@ app.post('/addIndi', function(req , res){
 
   var filename = "./uploads/" + req.body.filename;
   delete req.body["filename"];
-  //console.log(filename);
 
   var string = JSON.stringify(req.body);
-  //console.log("T: " + string);
 
   let rtrnVal = sharedLib.addJSONind(string, filename);
 
@@ -196,8 +186,6 @@ app.post('/getDesc', function(req , res){
 
   let descList = sharedLib.getJSONdesc(filename, string, genNum);
 
-  //console.log("T: " + decsList);
-
   res.send(descList);
 
 });
@@ -213,8 +201,6 @@ app.post('/getAncs', function(req , res){
   var string = JSON.stringify(req.body).replace(/\s/g, '');
 
   let ancsList = sharedLib.getJSONancs(filename, string, genNum);
-
-  //console.log("T: " + decsList);
 
   res.send(ancsList);
 
@@ -276,7 +262,7 @@ app.get('/storeFiles', function(req , res){
     var pos = -1;
     pos = file.search(".ged");
 
-    if(pos != -1) {
+    if (pos != -1) {
       
       array.push(file);
     }
@@ -307,7 +293,7 @@ function insertFiles(array) {
             
           console.log("ALERT: " + err);
 
-        }else {
+        } else {
 
           insertIndividuals(file, result.insertId);
         }
@@ -326,7 +312,6 @@ function insertIndividuals(file, file_id) {
     var str = JSON.stringify(viewData).replace(/\\n|\\r/g, '');
 
     var final = JSON.parse(str);
-    //console.log("Testing: " + last);
      
     insertLoop(final, file_id);
   }
@@ -343,7 +328,6 @@ function insertLoop(final, file_id) {
     
     connection.query(records, function (err, rows, fields) {
       if (err) {
-        
         console.log("ALERT: " + err);
       }
 
@@ -360,9 +344,7 @@ app.get('/clearData', function(req , res){
     if (err) {
         console.log("ALERT: " + err);
     } else {
-       // console.log("Cleared data from FILE");
-        res.send("OK");
-        
+        res.send("OK");     
     }
 
   });
@@ -378,7 +360,6 @@ app.get('/fileCount', function(req , res){
     connection.query("SELECT COUNT(*) AS total FROM FILE", function(err,rows) {
      
       numFiles = rows[0].total;
-      //console.log("TF: " + numFiles);
       callback(null, numFiles);
      
     });
@@ -387,7 +368,6 @@ app.get('/fileCount', function(req , res){
 
   nFiles(function (err, numFiles) {
 
-    //console.log("T: " + numFiles);
     var str = JSON.stringify(numFiles);
     res.send(str);
     
@@ -404,7 +384,6 @@ app.get('/indCount', function(req , res){
     connection.query("SELECT COUNT(*) AS total FROM INDIVIDUAL", function(err,rows) {
      
       numInds = rows[0].total;
-      //console.log("TF: " + numFiles);
       callback(null, numInds);
      
     });
@@ -413,7 +392,6 @@ app.get('/indCount', function(req , res){
 
   nInds(function (err, numInds) {
 
-    //console.log("T: " + numInds);
     var str = JSON.stringify(numInds);
     res.send(str);
     
@@ -423,20 +401,15 @@ app.get('/indCount', function(req , res){
 
 app.post('/queryReq', function(req , res) {
 
-  //console.log("S: " + req.body.statement);
   connection.query(req.body.statement, function (err, rows, fields) {
    
     if (err) {
         console.log("ALERT: " + err);
     }else {
-        
         res.send(rows);
     }
     
-
   });
-
-
 });
 
 
