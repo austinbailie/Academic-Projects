@@ -1,35 +1,27 @@
-
-
-// Put all onload AJAX calls here, and event listeners
 $(document).ready(function() {
-    // On page-load AJAX Example
-
+ 
     $('#helpTitle').on('shown.bs.collapse', function() {
        
        bothTables();
 
     }).on('show.bs.collapse', function() {
-        
-
     });
 
 
     $.ajax({
-        type: 'get',            //Request type
-        dataType: 'text',       //Data type - we will use JSON for almost everything 
-        url: '/getFileList',   //The server endpoint we are connecting to
+        type: 'get',            
+        dataType: 'text',       
+        url: '/getFileList',   
         success: function (data) {
            
             makeList(data);
             makeFileLog(data);
 
-            
         },
         fail: function(error) {
-            // Non-200 return, do something with error
-           
+            
+            console.log(error);
         }
-
     });
 
 
@@ -55,22 +47,18 @@ $(document).ready(function() {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-               
-                    
+                
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                   
+                
+                    console.log(error);
                 }
 
             });
 
             update();
         }
-
     });
-
-    
 
     $('#createFileForm').submit(function(e){
         e.preventDefault();
@@ -80,7 +68,6 @@ $(document).ready(function() {
         var sName = document.forms["createFileForm"]["subName"].value;
         var encoding = document.forms["createFileForm"]["encoding"].value;
         var vers = document.forms["createFileForm"]["gedVers"].value;
-
 
         if(fName == "" || source == "" || sName == "" || encoding == "" || vers == "") {
 
@@ -99,13 +86,11 @@ $(document).ready(function() {
                 processData: false,
                 success: function (data) {
                
-                    
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                   
+                
+                    console.log(error);
                 }
-
             });
 
             update();
@@ -113,7 +98,6 @@ $(document).ready(function() {
             var filename = document.getElementById("fileID").value;
             document.getElementById("statusPanel").innerHTML += "Saved a new file: " + filename + "<br>";
         }
-
     });
 
     $('#addIndiForm').submit(function(e){
@@ -150,20 +134,15 @@ $(document).ready(function() {
 
                         document.getElementById("statusPanel").innerHTML += "Error: " + file + "<br>";
                     }
-
-
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                   // console.log(error); 
+                    
+                    console.log(error);
                 }
-
             });
 
             update();
-
         }
-
     });
 
     $('#getDescForm').submit(function(e){
@@ -196,16 +175,13 @@ $(document).ready(function() {
 
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                   // console.log(error); 
+                    
+                    console.log(error);
                 }
-
             });
 
             update();
-
         }
-
     });
 
     $('#getAncsForm').submit(function(e){
@@ -238,16 +214,13 @@ $(document).ready(function() {
 
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                   // console.log(error); 
+                    
+                    console.log(error);
                 }
-
             });
 
             update();
-
         }
-
     });
 
     document.getElementById("btnStore").disabled = true;
@@ -257,7 +230,6 @@ $(document).ready(function() {
     document.getElementById("btnHelp").disabled = true;
     document.getElementById("btnSubmit").disabled = true;
 
-
     $('#connectDBForm').submit(function(e){
         e.preventDefault();
 
@@ -265,13 +237,11 @@ $(document).ready(function() {
         var pass = document.forms["connectDBForm"]["password"].value;
         var database = document.forms["connectDBForm"]["database"].value;
 
-        
         if(user == "" || pass == "" || database == "") {
 
             alert("Please Fill All Fields.");
 
         }else {
-
 
             var check = document.getElementById("failText");
 
@@ -317,19 +287,14 @@ $(document).ready(function() {
                         text.appendChild(node);
                         document.getElementById("footer").prepend(text);
                     }
-
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                   // console.log(error); 
+                
+                    console.log(error);
                 }
-
             });
-
         }
-
     });
-
 
     $('#storeFilesForm').submit(function(e){
         e.preventDefault();
@@ -343,12 +308,10 @@ $(document).ready(function() {
                DBstatus();
             },
             fail: function(error) {
-                // Non-200 return, do something with error
-               
+                
+                console.log(error); 
             }
-
         });
-
     });
 
     $('#clearDataForm').submit(function(e){
@@ -363,12 +326,10 @@ $(document).ready(function() {
                DBstatus();
             },
             fail: function(error) {
-                // Non-200 return, do something with error
-               
+                
+               console.log(error);
             }
-
         });
-
     });
 
     $('#displayDataForm').submit(function(e){
@@ -377,14 +338,12 @@ $(document).ready(function() {
         DBstatus();
 
     });
-
 });
 
 function update() {
 
     $(document).ready(function() {
     
-
         $.ajax({
             type: 'get',            
             dataType: 'text',       
@@ -393,15 +352,13 @@ function update() {
                
                 makeList(data);
                 makeFileLog(data);
-
-               
+            
             },
             fail: function(error) {
                 
+                console.log(error);
             }
-
         });
-
     });
 
     $('#fileLogTable').empty();
@@ -468,7 +425,6 @@ function descendantsTable(data) {
 
         document.getElementById("card3").appendChild(cardBody);        
     }
-
 }
 
 function ancestorsTable(data) {
@@ -512,7 +468,6 @@ function ancestorsTable(data) {
 
         document.getElementById("card4").appendChild(cardBody);
     }
-
 }
 
 function makeList(file) {
@@ -642,8 +597,8 @@ function makeFileLog(file) {
 
                 },
                 fail: function(error) {
-                // Non-200 return, do something with error
-                    //console.log(error); 
+                
+                    console.log(error);
                 }
             });
 
@@ -733,8 +688,8 @@ function makeGEDview(filename) {
 
         },
         fail: function(error) {
-        // Non-200 return, do something with error
-            //console.log(error); 
+        
+            console.log(error);
         }
     });
 
@@ -790,16 +745,16 @@ function DBstatus() {
                     }
                 },
                 fail: function(error) {
-                    // Non-200 return, do something with error
-                   
+                    
+                   console.log(error);
                 }
 
             });
 
         },
         fail: function(error) {
-            // Non-200 return, do something with error
-           
+            
+           console.log(error);
         }
 
     });
@@ -908,12 +863,10 @@ function queryIndTable(query) {
 
         },
         fail: function(error) {
-        // Non-200 return, do something with error
-            //console.log(error); 
+            
+            console.log(error);
         }
     });
-
-
 }
 
 function queryFileTable(query) {
@@ -969,18 +922,14 @@ function queryFileTable(query) {
                     table.rows[i+1].cells[7].innerHTML = data[i].num_families;
 
                 }
-
-            } 
-           
-
+            }         
         },
         fail: function(error) {
-        // Non-200 return, do something with error
-            //console.log(error); 
+        
+            console.log(error);
         }
     });
 
-        
 }
 
 function bothTables() {
@@ -1030,22 +979,17 @@ function describeFileTable() {
                        cell = row.insertCell(-1);
                     }
 
-
                     table.rows[i+1].cells[0].innerHTML = data[i].Field;
                     table.rows[i+1].cells[1].innerHTML = data[i].Type;
 
                 }
-
             } 
-
         },
         fail: function(error) {
-        // Non-200 return, do something with error
-            //console.log(error); 
+        
+            console.log(error);
         }
     });
-
-
 }
 
 function describeIndTable() {
@@ -1099,12 +1043,10 @@ function describeIndTable() {
 
         },
         fail: function(error) {
-        // Non-200 return, do something with error
-            //console.log(error); 
+            
+            console.log(error);
         }
     });
-
-
 }
 
 
